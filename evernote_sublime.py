@@ -469,8 +469,12 @@ class EvernoteDo():
     def populate_note(self, note, contents):
         if isinstance(contents, sublime.View):
             contents = contents.substr(sublime.Region(0, contents.size()))
+
+        LOG('样式？', EvernoteDo.MD_EXTRAS)
+
         body = markdown2.markdown(contents, extras=EvernoteDo.MD_EXTRAS)
 
+        LOG('内容', body)
         wrapper_style = ''
         if 'inline-css' in EvernoteDo.MD_EXTRAS:
             if 'body' in EvernoteDo.MD_EXTRAS['inline-css']:
@@ -486,7 +490,7 @@ class EvernoteDo():
                      SUBLIME_EVERNOTE_COMMENT_END))
         content += hidden
         content += body
-        LOG(body)
+
         content += '</en-note>'
         note.title = meta.get("title", note.title)
         tags = meta.get("tags", note.tagNames)
